@@ -48,15 +48,15 @@ def summarize(extracted: dict) -> dict:
     if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable is not set.")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL)
+    client = genai.Client(api_key=api_key)
 
     prompt = PROMPT_TEMPLATE.format(text=extracted["text"])
     log.info("Sending %d characters to Gemini (%s)...", len(extracted["text"]), MODEL)
 
-    response = model.generate_content(
-        prompt,
-        generation_config=genai.GenerationConfig(
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=prompt,
+        config=genai.types.GenerateContentConfig(
             temperature=0.2,
             response_mime_type="application/json",
         ),
