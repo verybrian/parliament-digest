@@ -26,7 +26,7 @@ def _bill_id_from_url(url: str) -> str:
 
 def fetch_bills() -> list:
     log.info("Fetching bills listing: %s", BILLS_URL)
-    resp = requests.get(BILLS_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+    resp = requests.get(BILLS_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT, verify=False)
     resp.raise_for_status()
 
     soup = BeautifulSoup(resp.text, "html.parser")
