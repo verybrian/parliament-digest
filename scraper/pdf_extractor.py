@@ -26,7 +26,7 @@ HEADERS = {
 
 def download_pdf(url: str) -> bytes:
     log.info("Downloading: %s", url)
-    resp = requests.get(url, headers=HEADERS, timeout=DOWNLOAD_TIMEOUT)
+    resp = requests.get(url, headers=HEADERS, timeout=DOWNLOAD_TIMEOUT, verify=False)
     resp.raise_for_status()
     size_kb = len(resp.content) / 1024
     if size_kb < 10:
